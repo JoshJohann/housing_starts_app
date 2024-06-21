@@ -1,9 +1,10 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
 
 # Load the dataset
-file_path = '/Users/josh/Downloads/HOUST.csv'
+file_path = os.path.join(os.path.dirname(__file__), 'HOUST.csv')
 df = pd.read_csv(file_path)
 
 # Convert date column to datetime format
@@ -25,20 +26,16 @@ start_date, end_date = st.date_input('Date range', [min_date, max_date])
 # Filter the dataset based on the selected date range
 filtered_df = df[(df['DATE'] >= pd.to_datetime(start_date)) & (df['DATE'] <= pd.to_datetime(end_date))]
 
-# Add a dropdown to select the column to plot
-column_to_plot = st.selectbox('Select column to plot:', df.columns)
-
 # Calculate the moving average
 filtered_df['Moving_Avg'] = filtered_df['HOUST'].rolling(window=12).mean()
 
-# Plot the selected column
-st.write(f'{column_to_plot} Over Time:')
+# Plot the time series and moving average of housing starts
+st.write('Housing Starts Over Time:')
 fig, ax = plt.subplots(figsize=(12, 6))
-ax.plot(filtered_df['DATE'], filtered_df[column_to_plot], label=column_to_plot)
-if column_to_plot == 'HOUST':
-    ax.plot(filtered_df['DATE'], filtered_df['Moving_Avg'], label='Moving Average (12 months)', color='orange')
-ax.set_title(f'{column_to_plot} Over Time')
+ax.plot(filtered_df['DATE'], filtered_df['HOUST'], label='Housing Starts')
+ax.plot(filtered_df['DATE'], filtered_df['Moving_Avg'], label='Moving Average (12 months)', color='orange')
+ax.set_title('Housing Starts Over Time')
 ax.set_xlabel('Date')
-ax.set_ylabel(column_to_plot)
+ax.set_ylabel('Housing Starts')
 ax.legend()
 st.pyplot(fig)
