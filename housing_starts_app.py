@@ -1,7 +1,7 @@
 import streamlit as st
 
 # Streamlit app
-st.title('Look inside the crystal ball')
+st.title('an important message awaits')
 
 # Input for the first name
 first_name = st.text_input("Enter your first name:")
