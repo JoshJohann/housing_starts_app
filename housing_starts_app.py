@@ -1,11 +1,11 @@
 import streamlit as st
 
 # Streamlit app
-st.title('Welcome to the Web App!')
+st.title('Look inside the crystal ball')
 
 # Input for the first name
-first_name = st.text_input("Please enter your first name:")
+first_name = st.text_input("Enter your first name:")
 
 # Submit button
 if st.button('Submit'):
-    st.write(f"Happy Birthday, {first_name}!")
+    st.write(f"You're so gay, {first_name}!")
